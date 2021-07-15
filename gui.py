@@ -39,10 +39,15 @@ WINDOWWIDTH, WINDOWHEIGHT = 600, 600
 
 BASICFONTSIZE = 30
 
+should_terminate = False
+
 
 def terminate():
+    global should_terminate
+    should_terminate = True
+
+def quit_program():
     pygame.quit()
-    sys.exit()
 
 
 def checkForQuit():
@@ -62,7 +67,7 @@ def start(fen=''):
 
     # Setting up the GUI window.
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
-    pygame.display.set_caption('Stockfish ')
+    pygame.display.set_caption('Stockfish Board Anaylisis GUI')
     BASICFONT = pygame.font.SysFont('calibri', BASICFONTSIZE)
 
     checkForQuit()
@@ -79,10 +84,11 @@ def start(fen=''):
     pygame.display.update()
     FPSCLOCK.tick(FPS)
 
-def update(fen):
+def update(fen=None):
     checkForQuit()
     gameboard.displayBoard()
-    gameboard.updatePieces(fen)
+    if fen is not None:
+        gameboard.updatePieces(fen)
 
     pygame.display.update()
     FPSCLOCK.tick(FPS)
@@ -90,3 +96,5 @@ def update(fen):
 if __name__ == "__main__":
     while True:
         start()
+        if should_terminate:
+            quit_program()

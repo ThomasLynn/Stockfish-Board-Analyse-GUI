@@ -1,8 +1,9 @@
 import chess
 import chess.engine
 import psutil
+import gui
 
-multipv = 5
+multipv = 10
 
 fen = "8/3b4/2rP3p/prP1k1p1/2R1N1p1/P3P3/5P1P/3R2K1 w - a6 0 33"
 board = chess.Board(fen)
@@ -22,6 +23,11 @@ if hash_size<10:
 print("hash size",hash_size)
 
 engine.configure({"Hash": hash_size})
+
+
+gui.start(fen)
+
+
 with engine.analysis(board, multipv =multipv) as analysis:
     for info in analysis:
         #print("\ninfo",info,"\n")
@@ -38,6 +44,11 @@ with engine.analysis(board, multipv =multipv) as analysis:
             if info.get('multipv') == 1:
                 print()
             print(info.get('multipv'),board.san(info.get('pv')[0]),info.get('score'), info.get('hashfull'),string)
+            
+        gui.start(fen)
+        if gui.should_terminate:
+            gui.quit_program()
+            break
         #if info.get("seldepth", 0) > 50:
         #    break
 
