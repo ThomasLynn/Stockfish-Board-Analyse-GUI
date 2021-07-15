@@ -10,8 +10,8 @@ board = chess.Board(fen)
 #Now make sure you give the correct location for your stockfish engine file
 #...in the line that follows by correctly defining path
 engine = chess.engine.SimpleEngine.popen_uci("./stockfish/stockfish_13_win_x64_bmi2.exe")
-engine.options["Hash"] = 1000
 engine.options["Threads"] = 12
+engine.options["Hash"] = 1000
 info = engine.analyse(board, chess.engine.Limit(time=5), multipv =5)
 for w in info:
     moves = w['pv']
