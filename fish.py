@@ -5,7 +5,7 @@ import gui
 
 multipv = 10
 
-fen = "8/3b4/2rP3p/prP1k1p1/2R1N1p1/P3P3/5P1P/3R2K1 w - a6 0 33"
+fen = "rnbq1rk1/pp1pp1bp/2p2np1/5p2/2PP4/2NBPN2/PP3PPP/R1BQK2R w KQ - 0 7"
 board = chess.Board(fen)
 
 engine = chess.engine.SimpleEngine.popen_uci("./stockfish/stockfish_13_win_x64_bmi2.exe")

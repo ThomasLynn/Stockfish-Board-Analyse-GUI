@@ -98,3 +98,4 @@ if __name__ == "__main__":
         start()
         if should_terminate:
             quit_program()
+            break
