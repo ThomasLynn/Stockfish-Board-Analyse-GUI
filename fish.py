@@ -17,9 +17,10 @@ for w in info:
     moves = w['pv']
     string = ""
     for i,j in enumerate(moves):
-        print("j",j)
         string += board.san(j)
+        board.push(j)
         if i<len(moves)-1:
             string += ", "
+    board.set_fen(fen)
     print(board.san(w['pv'][0]),w['score'],string)
 engine.quit()
