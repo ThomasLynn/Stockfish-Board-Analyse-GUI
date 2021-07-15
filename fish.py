@@ -1,8 +1,6 @@
 import chess
 import chess.engine
 import os
-import sys
-from score import *
 
 #here we assume the engine file is in same folder as our python script
 path = os.getcwd()
@@ -19,53 +17,9 @@ for w in info:
     moves = w['pv']
     string = ""
     for i,j in enumerate(moves):
+        print("j",j)
         string += board.san(j)
         if i<len(moves)-1:
             string += ", "
-    print(board.san(w['pv'][0]),w['score'],)
-"""
-moves = []
-
-def print_turn():
-    if board.turn:
-        print('White to move (positive scores better)')
-    else:
-        print('black to move (negative scores better)')
-        
-        
-print_turn()
-
-for legal_move in board.legal_moves:
-    move = Move(engine, board, legal_move)
-    move.calculate_score(0.2)
-    moves.append(move)
-    
-moves.sort(reverse = True)
-for w in moves:
-    print(w)
-
-print("deeper search")
-print_turn()
-
-for move in moves[:10]:
-    move.calculate_score(5)
-    print(move)
-
-print("sorted:")
-moves.sort(reverse = True)
-for w in moves:
-    print(w)
-    
-print("deeperer search")
-print_turn()
-
-for move in moves[:5]:
-    move.calculate_score(60)
-    print(move)
-    
-print("final sorted:")
-moves.sort(reverse = True)
-for w in moves:
-    print(w)
-"""
+    print(board.san(w['pv'][0]),w['score'],string)
 engine.quit()
