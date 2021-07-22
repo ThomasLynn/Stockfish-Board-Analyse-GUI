@@ -20,36 +20,25 @@ if ram_avaliable - 2**10 < hash_size:
     hash_size =  - 2**10
 if hash_size<10:
     hash_size = 10
+if hash_size>1_000: # this should be overridable for people who want more
+    hash_size = 1_000
 print("hash size",hash_size)
 
 engine.configure({"Hash": hash_size})
 
 
-gui.start(fen)
+gui.analysis_board = board
+gui.run_ui(fen)
 
 
 with engine.analysis(board, multipv =multipv) as analysis:
+    #print("\ninfo",info,"\n")
     for info in analysis:
-        #print("\ninfo",info,"\n")
-        moves = info.get('pv')
-        if moves!=None:
-            moves = info.get('pv')[:10]
-            string = ""
-            for i,j in enumerate(moves):
-                string += board.san(j)
-                board.push(j)
-                if i<len(moves)-1:
-                    string += ", "
-            board.set_fen(fen)
-            if info.get('multipv') == 1:
-                print()
-            print(info.get('multipv'),board.san(info.get('pv')[0]),info.get('score'), info.get('hashfull'),string)
+        gui.update_moves(info)
             
-        gui.start(fen)
+        gui.run_ui(fen)
         if gui.should_terminate:
             gui.quit_program()
             break
-        #if info.get("seldepth", 0) > 50:
-        #    break
 
 engine.quit()
