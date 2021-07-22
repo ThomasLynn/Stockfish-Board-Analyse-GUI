@@ -128,7 +128,7 @@ def update_moves(info):
         
 def draw_arrows():
     text_pos = []
-    for i, w in enumerate(reversed(arrows)):
+    for p, w in enumerate(reversed(arrows)):
         from_square = w[0][0].from_square
         from_position = board.Board.boardRect[7-from_square//8][from_square%8]
         to_square = w[0][0].to_square
@@ -140,6 +140,8 @@ def draw_arrows():
         arrow_drawing = np.array([(0, -50), (0, 50), (200, 50), (200, 150), (300, 0), (200, -150), (200, -50)], dtype = np.float)
         
         arrow_drawing[2:,0] += distance*6 - 300
+        arrow_drawing[:3,1] *= 1-(distance/(12*50))
+        arrow_drawing[-1,1] *= 1-(distance/(12*50))
         
         arrow_drawing = np.multiply(arrow_drawing, [1,0.5])
         
@@ -160,8 +162,17 @@ def draw_arrows():
             arrow_drawing[i] += from_position
             arrow_drawing[i] += [25,25]
         
-        arrows
-        pygame.draw.polygon(DISPLAYSURF, (244, 197, 19), arrow_drawing)
+        ok_color = np.array((244, 197, 19))
+        good_color = np.array((42,226,48))
+        steps = [1,0.5,0.25]
+        using_step = len(arrows)-p-1
+        #print("using_step",using_step,len(arrows),p)
+        interp = steps[using_step] if using_step<len(steps) else 0
+        
+        # this is not the "correct" way to interp color
+        color = ok_color + (good_color-ok_color)*interp
+        
+        pygame.draw.polygon(DISPLAYSURF, color, arrow_drawing)
         
     for i, w in enumerate(reversed(arrows)):
         #text = str(w[1].white()) # score from white's perspective
