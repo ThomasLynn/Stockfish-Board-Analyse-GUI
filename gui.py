@@ -17,6 +17,7 @@ import math
 
 from chessboard import board
 
+from InputBox import InputBox
 
 os.environ['SDL_VIDEO_CENTERED'] = '1' # Centre display window.
 
@@ -51,6 +52,9 @@ DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 pygame.display.set_caption('Stockfish Board Anaylisis GUI')
 offset = np.array([20,0])
 
+input_box1 = InputBox(10, 40, 580, 32, myfont)
+input_boxes = [input_box1]
+
 
 def terminate():
     global should_terminate
@@ -60,23 +64,10 @@ def quit_program():
     pygame.quit()
 
 
-def checkForQuit():
-    for event in pygame.event.get(QUIT): # get all the QUIT events
-        terminate() #terminate if any QUIT events are present
-    for event in pygame.event.get(KEYUP): # get all the KEYUP events
-        if event.key == K_ESCAPE:
-            terminate() # terminate if the KEYUP event was for the Esc key
-        pygame.event.post(event) # put the other KEYUP event objects back
-    
-    return False
-
-
 def run_ui(fen=''):
     global gameboard
 
     # Setting up the GUI window.
-
-    checkForQuit()
 
     DISPLAYSURF.fill(BGCOLOR)
     gameboard = board.Board(colors, BGCOLOR, DISPLAYSURF)
@@ -88,6 +79,23 @@ def run_ui(fen=''):
         gameboard.drawPieces()
         
     draw_arrows()
+    
+    for event in pygame.event.get():
+    
+        if event.type == pygame.QUIT:
+            terminate() #terminate if any QUIT events are present
+            
+        if event.type == pygame.KEYUP:
+            if event.key == K_ESCAPE:
+                terminate() # terminate if the KEYUP event was for the Esc key
+            #pygame.event.post(event) # put the other KEYUP event objects back
+            
+        for box in input_boxes:
+            box.handle_event(event)
+            
+
+    for box in input_boxes:
+        box.draw(DISPLAYSURF)
     
     pygame.display.update()
     FPSCLOCK.tick(FPS)

@@ -28,8 +28,8 @@ engine.configure({"Hash": hash_size})
 
 
 gui.analysis_board = board
+gui.input_box1.set_text(fen)
 gui.run_ui(fen)
-
 
 with engine.analysis(board, multipv =multipv) as analysis:
     #print("\ninfo",info,"\n")
