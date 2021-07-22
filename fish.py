@@ -3,7 +3,7 @@ import chess.engine
 import psutil
 import gui
 
-multipv = 16000
+multipv = 10
 
 fen = "r1bq1rk1/1p2bppp/p1nppn2/2p5/P1B1P3/2NP1N2/1PP1QPPP/R1B2RK1 w - - 1 9"
 board = chess.Board(fen)

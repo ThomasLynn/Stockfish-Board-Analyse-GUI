@@ -8,7 +8,7 @@ import psutil
 
 hash_sizes = [2,4,8,16,32,64,128,256,512]
 #hash_sizes = [2,4,8]
-depths = range(1,30)
+depths = range(1,36)
 
 data = {}
 
