@@ -1,3 +1,3 @@
 # Stockfish-Board-Anaylisis-GUI
 
-No GUI yet, github won't let me make this repo private ¯\\_(ツ)_/¯
+A barely functional board analysis program. If you want an actually good one, use this: https://github.com/rooklift/nibbler
